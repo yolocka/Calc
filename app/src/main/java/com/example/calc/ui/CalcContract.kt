@@ -1,9 +1,15 @@
-package com.example.calc
+package com.example.calc.ui
 
 class CalcContract {
 
+    companion object {
+        const val BASEURL = "https://api.apilayer.com/"
+        const val ERROR_MASSAGE = "ERROR"
+    }
+
     interface CalcView {
         fun <T> addFigures (figure: T)
+        fun showCurrency(currency: String)
     }
 
     interface Presenter {
@@ -14,5 +20,6 @@ class CalcContract {
         fun percent(a: Double): Double
         fun equal(a: Double): Double
         fun clearResult()
+        fun getCurrency()
     }
 }
