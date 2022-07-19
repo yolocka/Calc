@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/main_activity_padding"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/figures_text_input_layout"
@@ -114,7 +114,7 @@
         android:layout_width="@dimen/calc_button_width"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
-        android:text="@string/three_button_text"
+        android:text="@string/nine_button_text"
         android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/eight_button"
         app:layout_constraintEnd_toEndOf="@+id/multiplication_button"
@@ -267,7 +267,19 @@
         android:text="@string/separator_button_text"
         android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/zero_button"
-        app:layout_constraintEnd_toStartOf="@id/equal_button"
+        app:layout_constraintEnd_toStartOf="@id/currency_button"
+        app:layout_constraintTop_toBottomOf="@id/fifth_empty_text_view"
+        app:layout_constraintVertical_chainStyle="spread"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/currency_button"
+        android:layout_width="@dimen/calc_button_width"
+        android:layout_height="wrap_content"
+        android:backgroundTint="?colorSecondaryVariant"
+        android:text="@string/x_rate"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/separator_button"
+        app:layout_constraintEnd_toStartOf="@+id/equal_button"
         app:layout_constraintTop_toBottomOf="@id/fifth_empty_text_view"
         app:layout_constraintVertical_chainStyle="spread"/>
 
@@ -278,7 +290,7 @@
         android:backgroundTint="?colorPrimaryVariant"
         android:text="@string/equal_button_text"
         android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/separator_button"
+        app:layout_constraintStart_toEndOf="@+id/currency_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fifth_empty_text_view"
         app:layout_constraintVertical_chainStyle="spread"/>

@@ -1,14 +1,18 @@
-package com.example.calc
+package com.example.calc.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import com.example.calc.repo.CurrencyApi
+import com.example.calc.repo.RemoteRepository
+import com.example.calc.ui.CalcContract.Companion.BASEURL
 import com.example.calc.databinding.ActivityMainBinding
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(), CalcContract.CalcView {
 
     private lateinit var binding: ActivityMainBinding
-    private var presenter = CalcPresenter()
+    private var presenter = CalcPresenter(createRepository(), this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +31,11 @@ class MainActivity : AppCompatActivity(), CalcContract.CalcView {
             presenter.isActionDone = false
             binding.figuresEditText.setText("$figure")
         }
+    }
+
+    override fun showCurrency(currency: String) {
+        binding.figuresEditText.setText(currency)
+        presenter.isActionDone = true
     }
 
     private fun clickListenersSetUp() {
@@ -118,7 +127,19 @@ class MainActivity : AppCompatActivity(), CalcContract.CalcView {
                 addFigures(presenter.percent(figure))
                 presenter.isActionDone = true
             }
+            currencyButton.setOnClickListener {
+                presenter.getCurrency()
+            }
         }
     }
+    private fun createRepository(): RemoteRepository {
+        return RemoteRepository(createRetrofit().create(CurrencyApi::class.java))
+    }
 
+    private fun createRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BASEURL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
 }

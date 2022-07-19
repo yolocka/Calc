@@ -6,6 +6,7 @@
     <string name="plus_button_text">+</string>
     <string name="seven_button_text">7</string>
     <string name="eight_button_text">8</string>
+    <string name="nine_button_text">9</string>
     <string name="multiplication_button_text">*</string>
     <string name="four_button_text">4</string>
     <string name="five_button_text">5</string>
@@ -18,4 +19,5 @@
     <string name="negative_button_text">+/-</string>
     <string name="percent_button_text">%</string>
     <string name="division_button_text">/</string>
+    <string name="x_rate">$/Р</string>
 </resources>

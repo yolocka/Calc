@@ -1,12 +1,21 @@
-package com.example.calc
+package com.example.calc.ui
 
-class CalcPresenter : CalcContract.Presenter {
+import com.example.calc.CurrencyResponse
+import com.example.calc.repo.RemoteRepository
+import com.example.calc.ui.CalcContract.Companion.ERROR_MASSAGE
+import retrofit2.Response
+
+class CalcPresenter (
+    private val repository: RemoteRepository,
+    private val viewContract: CalcContract.CalcView
+    ) : CalcContract.Presenter, RemoteRepository.RepositoryCallback {
 
     var isActionDone: Boolean = false
     var isPlusPressed: Boolean = false
     var isMinusPressed: Boolean = false
     var isDivisionPressed: Boolean = false
     var isMultiplicationPressed: Boolean = false
+    private val currency = "USD"
     private var result : Double = 0.0
 
     override fun plus(a: Double): Double {
@@ -49,6 +58,10 @@ class CalcPresenter : CalcContract.Presenter {
         result = 0.0
     }
 
+    override fun getCurrency() {
+        repository.getCurrency(currency, this)
+    }
+
     private fun reset() {
         isPlusPressed = false
         isMinusPressed = false
@@ -64,5 +77,17 @@ class CalcPresenter : CalcContract.Presenter {
         if (result == 0.0) result = a
         reset()
         isActionDone = true
+    }
+
+    override fun handleResponse(response: Response<CurrencyResponse?>?) {
+        if (response != null && response.isSuccessful) {
+            val currencyResponse = response.body()
+            val currencyValue = currencyResponse?.quotes?.usdRub
+            viewContract.showCurrency(currencyValue.toString())
+        }
+    }
+
+    override fun handleError() {
+        viewContract.showCurrency(ERROR_MASSAGE)
     }
 }
